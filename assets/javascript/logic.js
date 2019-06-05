@@ -12,12 +12,10 @@ function gifButtons() {
 gifButtons();
 
 function clicks() {
-    $(".btn-info").on("click", function () {
+    $(".btn-info").on("click", function (event) {
         var queryURL = 'http://api.giphy.com/v1/gifs/search?q=' + $(this).attr("data-value") + '&api_key=' + APIkey + '&limit=10&rating=g';
 
-        $.ajax({
-            url: queryURL
-        }).then(function (data) {
+        $.ajax({url: queryURL}).then(function (data) {
             console.log(data);
         });
 
