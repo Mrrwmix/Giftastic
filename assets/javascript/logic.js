@@ -13,17 +13,31 @@ gifButtons();
 
 function clicks() {
     $(".btn-info").on("click", function (event) {
-        var queryURL = 'http://api.giphy.com/v1/gifs/search?q=' + $(this).attr("data-value") + '&api_key=' + APIkey + '&limit=10&rating=g';
+        var queryURL = 'http://api.giphy.com/v1/gifs/search?q=' + $(this).attr("data-value") + '&api_key=' + APIkey + '&limit=10';
 
-        $.ajax({url: queryURL}).then(function (data) {
-            console.log(data);
+        $.ajax({ url: queryURL }).then(function (response) {
+            $("#gif-view").empty();
+            console.log(response);
+            console.log(response.data[0].images);
+            for (var i = 0; i < response.data.length; i++) {
+                var creatureDiv = $("<div>");
+                var ratingP = $("<p class='text-center'>").text("Rating: " + response.data[i].rating);
+                var creatureImg = $("<img>");
+                creatureImg.attr("data-state", "still");
+                creatureImg.attr("data-still", response.data[i].images.fixed_height_still.url);
+                creatureImg.attr("data-animated", response.data[i].images.fixed_height.url);
+                creatureImg.attr("src", $(creatureImg).attr("data-still"));
+                creatureDiv.prepend(ratingP);
+                creatureDiv.prepend(creatureImg);
+                $("#gif-view").append(creatureDiv);
+            }
         });
 
     });
 
-    $(".btn-secondary").on("click", function(event){
+    $(".btn-secondary").on("click", function (event) {
         event.preventDefault();
-        if ($("#gif-request").val() != ''){
+        if ($("#gif-request").val() != '') {
             creatures.push($("#gif-request").val());
         }
         gifButtons();
