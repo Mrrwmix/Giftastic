@@ -41,7 +41,6 @@ function clicks() {
         }
         gifButtons();
         $("#gif-request").val('');
-        clicks();
     })
 
     $(".gif").on("click", function(event){
