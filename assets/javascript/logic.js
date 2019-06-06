@@ -20,6 +20,15 @@ function clicks() {
         });
 
     });
+
+    $(".btn-secondary").on("click", function(event){
+        event.preventDefault();
+        if ($("#gif-request").val() != ''){
+            creatures.push($("#gif-request").val());
+        }
+        gifButtons();
+        $("#gif-request").val('');
+    })
 } // This function will hold all on clicks and will have to be called any time a button is added.
 
 
