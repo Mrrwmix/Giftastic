@@ -1,4 +1,4 @@
-var creatures = ['garden eel', 'manta ray', 'woodpecker', 'meerkat', 'raccoon', 'bobbit worm', 'sloth', 'startled cat', 'poison dart frog', 'porcupinefish', 'quokka', 'hummingbird'];
+var creatures = ['garden eel', 'manta ray', 'stubby squid', 'meerkat', 'raccoon', 'bobbit worm', 'sloth', 'startled cat', 'poison dart frog', 'porcupinefish', 'quokka', 'hummingbird'];
 var APIkey = 'p1gajnqCN1qu0JxHpaUVsQKjfQUDU03c';
 
 function gifButtons() {
@@ -22,7 +22,7 @@ function clicks() {
             for (var i = 0; i < response.data.length; i++) {
                 var creatureDiv = $("<div>");
                 var ratingP = $("<p class='text-center'>").text("Rating: " + response.data[i].rating);
-                var creatureImg = $("<img>");
+                var creatureImg = $("<img class='gif img-fluid'>");
                 creatureImg.attr("data-state", "still");
                 creatureImg.attr("data-still", response.data[i].images.fixed_height_still.url);
                 creatureImg.attr("data-animated", response.data[i].images.fixed_height.url);
@@ -31,6 +31,7 @@ function clicks() {
                 creatureDiv.prepend(creatureImg);
                 $("#gif-view").append(creatureDiv);
             }
+            clicks();
         });
 
     });
@@ -42,6 +43,18 @@ function clicks() {
         }
         gifButtons();
         $("#gif-request").val('');
+    })
+
+    $(".gif").on("click", function(event){
+        console.log("I've been clicked!");
+        if ($(this).attr("data-state") == 'still'){
+            $(this).attr("src", $(this).attr('data-animated'));
+            $(this).attr("data-state", 'animated');
+        }
+        else {
+            $(this).attr("src", $(this).attr('data-still'));
+            $(this).attr("data-state", 'still');
+        }
     })
 } // This function will hold all on clicks and will have to be called any time a button is added.
 
