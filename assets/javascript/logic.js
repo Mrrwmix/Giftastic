@@ -1,4 +1,4 @@
-var creatures = ['garden eel', 'manta ray', 'stubby squid', 'meerkat', 'raccoon', 'bobbit worm', 'sloth', 'startled cat', 'poison dart frog', 'porcupinefish', 'quokka', 'hummingbird'];
+var creatures = ['garden eel', 'manta ray', 'stubby squid', 'meerkat', 'raccoon', 'bobbit worm', 'sloth', 'startled cat', 'poison dart frog', 'pufferfish', 'quokka', 'hummingbird'];
 var APIkey = 'p1gajnqCN1qu0JxHpaUVsQKjfQUDU03c';
 
 function gifButtons() {
@@ -17,10 +17,8 @@ function clicks() {
 
         $.ajax({ url: queryURL }).then(function (response) {
             $("#gif-view").empty();
-            console.log(response);
-            console.log(response.data[0].images);
             for (var i = 0; i < response.data.length; i++) {
-                var creatureDiv = $("<div>");
+                var creatureDiv = $("<div class='m-1'>");
                 var ratingP = $("<p class='text-center'>").text("Rating: " + response.data[i].rating);
                 var creatureImg = $("<img class='gif img-fluid'>");
                 creatureImg.attr("data-state", "still");
@@ -43,10 +41,10 @@ function clicks() {
         }
         gifButtons();
         $("#gif-request").val('');
+        clicks();
     })
 
     $(".gif").on("click", function(event){
-        console.log("I've been clicked!");
         if ($(this).attr("data-state") == 'still'){
             $(this).attr("src", $(this).attr('data-animated'));
             $(this).attr("data-state", 'animated');
