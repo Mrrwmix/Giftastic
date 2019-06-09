@@ -36,21 +36,13 @@ function ajaxOnSubmit(newGif) {
         }
     })
 }
-// function clicks() {
-// This function will hold all on clicks and will have to be called any time a button is added.
-$("body").on("click", '.btn-info',function (event) {
-    // console.log($(this).attr("data-value"));
-    console.log("EHHHHHH")
+$("body").on("click", '.btn-info', function (event) {
     ajaxOnSubmit($(this).attr("data-value"));
 })
-// });
-    
-//         });
+
 
 $("body").on("click", ".btn-secondary", function (event) {
     event.preventDefault();
-    // if ($("#gif-request").val() !== '') {
-    // gifButtons($("#gif-request").val());
     var searchVal = $("#gif-request").val()
     ajaxOnSubmit(searchVal);
     $("#gif-list").append("<button class='btn btn-info' data-value='" + searchVal + "'>" + searchVal + "</button>");
@@ -69,5 +61,25 @@ $("body").on("click", ".gif", function (event) {
     }
 })
 
-
+$("body").on("click", ".fa-heart", function (event) {
+    if ($(this).css("color") != 'rgb(255, 0, 0)') {
+        $(this).css("color", "red");
+        console.log($(this).parent().siblings("img").attr("data-animated"));
+        console.log($(this).css("color"));
+        console.log($(this).parent().siblings("p").text());
+        var favDiv = $("<div class='m-1'>");
+        var ratingFP = $("<p class='text-center'>").text($(this).parent().siblings("p").text());
+        var creatureFImg = $("<img class='gif img-fluid'>");
+        var favoIcon = $("<span>" + "<i class=\"fas fa-minus-circle\">");
+        creatureFImg.attr("data-state", "still");
+        creatureFImg.attr("data-still", $(this).parent().siblings("img").attr("data-still"));
+        creatureFImg.attr("data-animated", $(this).parent().siblings("img").attr("data-animated"));
+        creatureFImg.attr("src", $(this).parent().siblings("img").attr("data-still"));
+        favDiv.prepend(favoIcon);
+        favDiv.prepend(ratingFP);
+        favDiv.prepend(creatureFImg);
+        $(".col-md-12 section").append(favDiv);
+    }
+    // $("#favoritesLand").append("<img src='" + $(this).parent().attr("data-value").images.fixed_height.url +"'");
+})
 
