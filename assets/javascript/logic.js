@@ -1,5 +1,8 @@
 var creatures = ['garden eel', 'manta ray', 'stubby squid', 'meerkat', 'raccoon', 'bobbit worm', 'sloth', 'startled cat', 'poison dart frog', 'pufferfish', 'quokka', 'hummingbird'];
 var APIkey = 'p1gajnqCN1qu0JxHpaUVsQKjfQUDU03c';
+for (var i = 0; i < creatures.length; i++) {
+    $("#gif-list").append("<button class='btn btn-info' data-value='" + creatures[i] + "'>" + creatures[i] + "</button>");
+}
 
 function gifButtons(name) {
     creatures.push(name);
@@ -11,7 +14,6 @@ function gifButtons(name) {
     ajaxOnSubmit(name);
 }
 
-gifButtons('puppy');
 
 function ajaxOnSubmit(newGif) {
     var queryURL = 'https://api.giphy.com/v1/gifs/search?q=' + newGif + '&api_key=' + APIkey + '&limit=10';
@@ -22,10 +24,12 @@ function ajaxOnSubmit(newGif) {
             var creatureDiv = $("<div class='m-1'>");
             var ratingP = $("<p class='text-center'>").text("Rating: " + response.data[i].rating);
             var creatureImg = $("<img class='gif img-fluid'>");
+            var favIcon = $("<span data-value='" + i + "'>" + "<i class=\"far fa-heart\">");
             creatureImg.attr("data-state", "still");
             creatureImg.attr("data-still", response.data[i].images.fixed_height_still.url);
             creatureImg.attr("data-animated", response.data[i].images.fixed_height.url);
             creatureImg.attr("src", $(creatureImg).attr("data-still"));
+            creatureDiv.prepend(favIcon);
             creatureDiv.prepend(ratingP);
             creatureDiv.prepend(creatureImg);
             $("#gif-view").append(creatureDiv);

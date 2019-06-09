@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <script src="assets/javascript/jquery-3.4.1.min.js"></script>
+    <script src="https://kit.fontawesome.com/b2b4a4bb36.js"></script>
     <title>Giftastic</title>
 </head>
 
@@ -19,14 +20,25 @@
         <div class="row mt-1">
             <div class="col-md-10 d-flex justify-content-center flex-wrap flex-grow-1" id="gif-view">
             </div>
-            <div class="col-md-2 border border-secondary rounded p-1 h-25 bg-light ">
-                <form>
-                    <div class="form-group text-center">
-                        <label for="gifsearchfunction">Add a creature!</label>
-                        <input type="text" class="form-control" placeholder="Type your request here" id="gif-request">
+            <div class="col-md-2 border border-secondary rounded bg-light">
+                <div class="row">
+                    <div class="col-md-12 h-25 bg-light">
+                        <form>
+                            <div class="form-group text-center">
+                                <label for="gifsearchfunction">Add a creature!</label>
+                                <input type="text" class="form-control" placeholder="Type your request here"
+                                    id="gif-request">
+                            </div>
+                            <button class="btn btn-secondary btn-block">Submit</button>
+                        </form>
                     </div>
-                    <button class="btn btn-secondary btn-block">Submit</button>
-                </form>
+                    <div class="col-md-12 bg-light">
+                        <hr>
+                        <h2 class="text-center text-info">Favorites!</h2>
+                        <hr>
+                        <div id="#favoritesLand"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

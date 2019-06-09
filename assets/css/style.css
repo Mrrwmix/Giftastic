@@ -1,0 +1,8 @@
+.m-1 {
+    position: relative;
+}
+div span {
+    position: absolute;
+    left: 1%;
+    bottom: 7%;
+}
