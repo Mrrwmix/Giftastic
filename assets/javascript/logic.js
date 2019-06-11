@@ -1,4 +1,5 @@
 var creatures = ['garden eel', 'manta ray', 'stubby squid', 'meerkat', 'raccoon', 'bobbit worm', 'sloth', 'startled cat', 'poison dart frog', 'pufferfish', 'quokka', 'hummingbird'];
+var favorites = [];
 var APIkey = 'p1gajnqCN1qu0JxHpaUVsQKjfQUDU03c';
 for (var i = 0; i < creatures.length; i++) {
     $("#gif-list").append("<button class='btn btn-info' data-value='" + creatures[i] + "'>" + creatures[i] + "</button>");
@@ -18,13 +19,12 @@ function gifButtons(name) {
 function ajaxOnSubmit(newGif) {
     var queryURL = 'https://api.giphy.com/v1/gifs/search?q=' + newGif + '&api_key=' + APIkey + '&limit=10';
     $.ajax({ url: queryURL }).then(function (response) {
-        console.log(response);
         $("#gif-view").empty();
         for (var i = 0; i < response.data.length; i++) {
-            var creatureDiv = $("<div class='m-1'>");
-            var ratingP = $("<p class='text-center'>").text("Rating: " + response.data[i].rating);
+            var creatureDiv = $("<div class='m-1 d-inline-block'>");
+            var ratingP = $("<p class='text-center m-0'>").text("Rating: " + response.data[i].rating);
             var creatureImg = $("<img class='gif img-fluid'>");
-            var favIcon = $("<span data-value='" + i + "'>" + "<i class=\"far fa-heart\">");
+            var favIcon = $("<span class='far fa-heart'>").text('♥');
             creatureImg.attr("data-state", "still");
             creatureImg.attr("data-still", response.data[i].images.fixed_height_still.url);
             creatureImg.attr("data-animated", response.data[i].images.fixed_height.url);
@@ -64,22 +64,31 @@ $("body").on("click", ".gif", function (event) {
 $("body").on("click", ".fa-heart", function (event) {
     if ($(this).css("color") != 'rgb(255, 0, 0)') {
         $(this).css("color", "red");
-        console.log($(this).parent().siblings("img").attr("data-animated"));
-        console.log($(this).css("color"));
-        console.log($(this).parent().siblings("p").text());
-        var favDiv = $("<div class='m-1'>");
-        var ratingFP = $("<p class='text-center'>").text($(this).parent().siblings("p").text());
+        var favDiv = $("<div class='text-center'>");
+        // var ratingFP = $("<p class='text-center'>").text($(this).siblings("p").text()); Keeping the rating makes it look bad
         var creatureFImg = $("<img class='gif img-fluid'>");
-        var favoIcon = $("<span>" + "<i class=\"fas fa-minus-circle\">");
+        var favoIcon = $("<p class='cancel-x'>").text('⌧');
         creatureFImg.attr("data-state", "still");
-        creatureFImg.attr("data-still", $(this).parent().siblings("img").attr("data-still"));
-        creatureFImg.attr("data-animated", $(this).parent().siblings("img").attr("data-animated"));
-        creatureFImg.attr("src", $(this).parent().siblings("img").attr("data-still"));
+        creatureFImg.attr("data-still", $(this).siblings("img").attr("data-still"));
+        creatureFImg.attr("data-animated", $(this).siblings("img").attr("data-animated"));
+        creatureFImg.attr("src", $(this).siblings("img").attr("data-still"));
         favDiv.prepend(favoIcon);
-        favDiv.prepend(ratingFP);
+        // favDiv.prepend(ratingFP);
         favDiv.prepend(creatureFImg);
         $(".col-md-12 section").append(favDiv);
+        favorites.push($(this).siblings("img").attr("data-still"));
+        favorites.push($(this).siblings("img").attr("data-animated"));
     }
-    // $("#favoritesLand").append("<img src='" + $(this).parent().attr("data-value").images.fixed_height.url +"'");
 })
+$("body").on("click", ".cancel-x", function (event) {
+    favorites.splice(favorites.indexOf($(this).siblings("img").attr("data-still")), 2);
+    $(this).parent().empty();
+    $(".fa-heart").each(function(index){
+        if (favorites.indexOf($(this).siblings("img").attr("data-still")) == -1){
+            $(this).css("color", "black");
+        }
+    })
+})
+    // $("#favoritesLand").append("<img src='" + $(this).parent().attr("data-value").images.fixed_height.url +"'");
+
 

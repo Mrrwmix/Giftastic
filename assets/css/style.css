@@ -1,12 +1,11 @@
-.m-1 {
-    position: relative;
-}
-div span {
-    position: absolute;
-    left: 1%;
-    bottom: 7%;
-}
+
 
 .fa-heart, .fa-minus-circle {
+    cursor: pointer;
+    position: relative;
+    left: 50%;
+}
+
+.cancel-x {
     cursor: pointer;
 }
