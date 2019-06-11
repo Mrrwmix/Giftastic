@@ -3,7 +3,7 @@ var favorites = [];
 var APIkey = 'p1gajnqCN1qu0JxHpaUVsQKjfQUDU03c';
 
 $(document).ready(function () {
-    if (typeof(Storage) !== 'undefined'){
+    if (localStorage.getItem('favs') !== null && localStorage.getItem('favs') !== "[]"){
         favorites = JSON.parse(localStorage.getItem("favs"));
         for (var i = 0; i < favorites.length; i = i + 2){
             var favDiv = $("<div class='text-center'>");
@@ -17,6 +17,9 @@ $(document).ready(function () {
             favDiv.prepend(creatureFImg);
             $(".col-md-12 section").append(favDiv);
         }
+    }
+    else {
+        console.log("You have no favs!");
     }
     for (var i = 0; i < creatures.length; i++) {
         $("#gif-list").append("<button class='btn btn-info' data-value='" + creatures[i] + "'>" + creatures[i] + "</button>");
