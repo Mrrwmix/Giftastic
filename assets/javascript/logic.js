@@ -3,15 +3,15 @@ var favorites = [];
 var APIkey = 'p1gajnqCN1qu0JxHpaUVsQKjfQUDU03c';
 
 $(document).ready(function () {
-    if (localStorage.getItem('favs') !== null && localStorage.getItem('favs') !== "[]"){
+    if (localStorage.getItem('favs') !== null && localStorage.getItem('favs') !== "[]") {
         favorites = JSON.parse(localStorage.getItem("favs"));
-        for (var i = 0; i < favorites.length; i = i + 2){
+        for (var i = 0; i < favorites.length; i = i + 2) {
             var favDiv = $("<div class='text-center'>");
             var creatureFImg = $("<img class='gif img-fluid'>");
             var favoIcon = $("<p class='cancel-x'>").text('⌧');
             creatureFImg.attr("data-state", "still");
             creatureFImg.attr("data-still", favorites[i]);
-            creatureFImg.attr("data-animated", favorites[i+1]);
+            creatureFImg.attr("data-animated", favorites[i + 1]);
             creatureFImg.attr("src", favorites[i]);
             favDiv.prepend(favoIcon);
             favDiv.prepend(creatureFImg);
@@ -25,17 +25,14 @@ $(document).ready(function () {
         $("#gif-list").append("<button class='btn btn-info' data-value='" + creatures[i] + "'>" + creatures[i] + "</button>");
     }
 
-    function gifButtons(name) {
-        creatures.push(name);
-        $("#gif-list").empty();
-        for (var i = 0; i < creatures.length; i++) {
-            $("#gif-list").append("<button class='btn btn-info' data-value='" + creatures[i] + "'>" + creatures[i] + "</button>");
-        }
-        $("#gif-request").val('');
-        ajaxOnSubmit(name);
+    function heartCheck() {
+        $(".fa-heart").each(function (index) {
+            if (favorites.indexOf($(this).siblings("img").attr("data-still")) >= 0) {
+                console.log("I am red");
+                $(this).css("color", "rgb(255, 0, 0)");
+            }
+        })
     }
-
-
     function ajaxOnSubmit(newGif) {
         var queryURL = 'https://api.giphy.com/v1/gifs/search?q=' + newGif + '&api_key=' + APIkey + '&limit=10';
         $.ajax({ url: queryURL }).then(function (response) {
@@ -54,6 +51,7 @@ $(document).ready(function () {
                 creatureDiv.prepend(creatureImg);
                 $("#gif-view").append(creatureDiv);
             }
+            heartCheck();
         })
     }
     $("body").on("click", '.btn-info', function (event) {
@@ -64,10 +62,10 @@ $(document).ready(function () {
     $("body").on("click", ".btn-secondary", function (event) {
         event.preventDefault();
         var searchVal = $("#gif-request").val()
+        creatures.push(searchVal);
         ajaxOnSubmit(searchVal);
         $("#gif-list").append("<button class='btn btn-info' data-value='" + searchVal + "'>" + searchVal + "</button>");
         $("#gif-request").val('');
-        console.log(creatures);
     })
 
     $("body").on("click", ".gif", function (event) {
